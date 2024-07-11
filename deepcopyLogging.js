@@ -30,7 +30,6 @@ function dealTypes(origin, memo) {
         ? eval(origin.toString())
         : new Function(`return ${origin.toString()}`)()
     );
-
   } else {
     setToTarget(
       origin.constructor
@@ -69,7 +68,6 @@ function dealTypes(origin, memo) {
     toTarget = value;
     memo.set(origin, toTarget);
   }
-
   function dcCurry(value) {
     return deepCopy(value, memo);
   }
