@@ -13,11 +13,7 @@
 // www.webatoms.in/blog/general/Difference-between-instanceOf-Array-and-Array-isArray-2f#contextId=0
 // https://stackoverflow.com/questions/28222228/javascript-es6-test-for-arrow-function-built-in-function-regular-function
 function deepCopy(origin, memo = new WeakMap()) {
-  if (
-    origin === null ||
-    origin === void 0 ||
-    (typeof origin !== "function" && typeof origin !== "object")
-  ) {
+  if (origin === null || origin === void 0 || (typeof origin !== "function" && typeof origin !== "object")) {
     return origin;
   }
   if (memo.has(origin)) {
@@ -39,7 +35,7 @@ function dealTypes(origin, memo) {
     setToTarget(
       origin.constructor
         ? new origin.constructor()
-        : Object.create(Object.getPrototypeOf(origin))                 // prototype may not exist
+        : Object.create(Object.getPrototypeOf(origin))                  // prototype may not exist
     );
   }
 
@@ -54,15 +50,16 @@ function dealTypes(origin, memo) {
   }
 
   for (const key of Reflect.ownKeys(origin)) {
-    if (key==='prototype') { continue; }                                  // do not copy prototype of function object
-    Object.defineProperty(toTarget, key, {                       // descriptors, non-enumerable values
+    if (key === 'prototype') {
+      continue;
+    }                                                                     // do not copy prototype of function object
+    Object.defineProperty(toTarget, key, {                                // descriptors, non-enumerable values
       ...Object.getOwnPropertyDescriptor(origin, key),
       value: dcCurry(origin[key]),
     });
   }
 
-  if (!Object.isExtensible(origin)) {
-    // extensive
+  if (!Object.isExtensible(origin)) {                                     // extensive
     Object.preventExtensions(toTarget);
   }
 
@@ -81,6 +78,8 @@ function dealTypes(origin, memo) {
 function classOf(o) {
   return Object.prototype.toString.call(o).slice(8, -1);
 }
+
+
 
 function loggingProxy(ob) {
   const handlers = {
